@@ -5,25 +5,38 @@ import logo2 from "../assets/2.png";
 import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
-const {LoginUser} = use(AuthContext)
-console.log(name)
-    const handleLogin = (e) =>{
-        e.preventDefault()
-        const form = e.target
-        const email = form.email.value;
-        const password = form.password.value
-        console.log(email, password)
+  const { LoginUser } = use(AuthContext);
+  // console.log(name)
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    // console.log(email, password)
 
-        LoginUser(email, password)
-        .then(result =>{
-            console.log(result)
+    LoginUser(email, password)
+      .then((result) => {
+        // console.log(result)
+        const userInfo = {
+          email,
+          lastSignIn: result.user?.metadata?.lastSignInTime,
+        };
+        fetch("http://localhost:2100/users", {
+          method: "PATCH",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userInfo),
         })
-        .catch(error =>{
-            console.log(error.message)
-        })
-    }
+        .then(res => res.json())
+        .then(data => console.log(data))
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
   return (
-    <div >
+    <div>
       <Link to="/" className="flex items-center gap-2">
         <FaLongArrowAltLeft /> Back to Home
       </Link>

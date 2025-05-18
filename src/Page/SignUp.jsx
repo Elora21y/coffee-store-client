@@ -7,22 +7,31 @@ import toast from "react-hot-toast";
 
 const SignUp = () => {
   const { createUser } = use(AuthContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSinUp = (e) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    const { password, ...userProfile } = Object.fromEntries(formData.entries());
+    // const { password, ...userProfile } = Object.fromEntries(formData.entries());
     // const email = formData.get('email');
     // const password = formData.get('password');
 
-    console.log(userProfile.email, password);
+    const { password, email, ...restFormData } = Object.fromEntries(
+      formData.entries()
+    );
+    // console.log({email, password , ...restFormData});
 
     // create user in firebase
-    createUser(userProfile.email, password)
+    createUser(email, password)
       .then((result) => {
         console.log(result);
+        const userProfile = {
+          email,
+          ...restFormData,
+          creationTime: result.user?.metadata?.creationTime,
+          lastSignIn: result.user?.metadata?.lastSignInTime,
+        };
         //save profile info in the DB
         fetch("http://localhost:2100/users", {
           method: "POST",
@@ -37,8 +46,8 @@ const SignUp = () => {
               console.log("after profile save", data);
               toast.success("Your Account is created");
             }
-            navigate('/')
-            form.reset()
+            navigate("/");
+            form.reset();
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -96,10 +105,10 @@ const SignUp = () => {
                   {/* Phone  */}
                   <label className="label">Phone</label>
                   <input
-                    type="number"
+                    type="tel"
                     className="input"
                     placeholder="Phone Number"
-                    name="address"
+                    name="phone"
                     required
                   />
                   {/* photo */}
