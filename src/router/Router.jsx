@@ -18,7 +18,7 @@ export const router = createBrowserRouter([
       {
         index : true,
         Component : Home,
-        loader : ()=> fetch('http://localhost:2100/coffees')
+        loader : ()=> fetch('https://coffee-store-server-amber-zeta.vercel.app/coffees')
       },
       {
         path : '/add-coffee',
@@ -27,12 +27,12 @@ export const router = createBrowserRouter([
       {
         path : '/update-coffee/:id',
         Component : UpdateCoffee,
-        loader : ({params}) => fetch(`http://localhost:2100/coffees/${params.id}`)
+        loader : ({params}) => fetch(`https://coffee-store-server-amber-zeta.vercel.app/coffees/${params.id}`)
       },
       {
         path : '/coffee-detail/:id',
         Component : CoffeeDetail,
-        loader : ({params}) => fetch(`http://localhost:2100/coffees/${params.id}`)
+        loader : ({params}) => fetch(`https://coffee-store-server-amber-zeta.vercel.app/coffees/${params.id}`)
       },
       {
         path : '/login',
@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
       {
         path : '/users',
         Component: Users,
-        loader : ()=> fetch('http://localhost:2100/users')
+        loader : ()=> fetch('https://coffee-store-server-amber-zeta.vercel.app/users')
       }
 
     ]

@@ -14,7 +14,7 @@ const AddCoffee = () => {
         console.log( formData.entries())
 
         //create/post
-        fetch('http://localhost:2100/coffees' , {
+        fetch('https://coffee-store-server-amber-zeta.vercel.app/coffees' , {
             method : 'POST',
             headers : {
                 'content-type' : 'application/json'

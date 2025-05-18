@@ -33,7 +33,7 @@ const SignUp = () => {
           lastSignIn: result.user?.metadata?.lastSignInTime,
         };
         //save profile info in the DB
-        fetch("http://localhost:2100/users", {
+        fetch("https://coffee-store-server-amber-zeta.vercel.app/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",
